@@ -101,7 +101,6 @@ public class MainActivity extends AppCompatActivity {
                 int[] textLocation = new int[2];
                 binding.addNumber.getLocationOnScreen(textLocation);
                 if (event.getRawX()<=textLocation[0]+binding.addNumber.getTotalPaddingLeft()) {
-                    // Left drawable was tapped
                     return true;
                 }
                 if (event.getRawX()>=textLocation[0]+binding.addNumber.getWidth()-binding.addNumber.getTotalPaddingRight()){
