@@ -105,6 +105,8 @@ public class MainActivity extends AppCompatActivity {
                     return true;
                 }
                 if (event.getRawX()>=textLocation[0]+binding.addNumber.getWidth()-binding.addNumber.getTotalPaddingRight()){
+                    list.add(new NumberModel(phone_num));
+                    numberAdapter.notifyDataSetChanged();
                     Toast.makeText(MainActivity.this, "Added", Toast.LENGTH_SHORT).show();
                     return true;
                 }
@@ -118,7 +120,6 @@ public class MainActivity extends AppCompatActivity {
                 finish();
             }
         });
-        //            SmsManager smsManager = getApplicationContext().getSystemService(SmsManager.class);
     }
 
     public void sendSMS(String phoneNo, String msg) {
