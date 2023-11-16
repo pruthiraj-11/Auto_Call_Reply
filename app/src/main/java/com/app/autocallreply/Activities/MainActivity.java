@@ -49,9 +49,7 @@ public class MainActivity extends AppCompatActivity {
                 ActivityCompat.requestPermissions(MainActivity.this, new String[]{android.Manifest.permission.READ_PHONE_STATE,Manifest.permission.ANSWER_PHONE_CALLS,Manifest.permission.SEND_SMS}, 74);
             }
         }
-//        else{
-//            notify();
-//        }
+        list=new ArrayList<>();
         sharedPreferences=getSharedPreferences("switchstate",MODE_PRIVATE);
         binding.switch1.setChecked(sharedPreferences.getBoolean("value",true));
 
@@ -66,9 +64,9 @@ public class MainActivity extends AppCompatActivity {
             phone_num= intent.getStringExtra("number");
             if(phone_num!=null){
                 Toast.makeText(this, phone_num, Toast.LENGTH_LONG).show();
+                sendSMS(phone_num,"Busy");
                 list.add(new NumberModel(phone_num));
                 numberAdapter.notifyDataSetChanged();
-                sendSMS(phone_num,"Busy");
             } else {
                 Toast.makeText(this, "Not identified", Toast.LENGTH_SHORT).show();
             }

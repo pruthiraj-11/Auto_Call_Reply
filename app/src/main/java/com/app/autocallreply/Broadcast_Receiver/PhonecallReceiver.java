@@ -19,7 +19,7 @@ public class PhonecallReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         if (intent.getStringExtra(TelephonyManager.EXTRA_STATE).equals(TelephonyManager.EXTRA_STATE_RINGING)) {
-            Toast.makeText(context, "Incoming call...", Toast.LENGTH_SHORT).show();
+//            Toast.makeText(context, "Incoming call...", Toast.LENGTH_SHORT).show();
             String savedNumber = Objects.requireNonNull(intent.getExtras()).getString(TelephonyManager.EXTRA_INCOMING_NUMBER);
             TelecomManager tm = (TelecomManager) context.getSystemService(Context.TELECOM_SERVICE);
             if (tm != null) {

@@ -15,7 +15,7 @@ import java.util.ArrayList;
 
 public class NumberAdapter extends RecyclerView.Adapter<NumberAdapter.viewHolder> {
 
-    ArrayList<NumberModel> list;
+    ArrayList<NumberModel> list=new ArrayList<>();
 
     public NumberAdapter(ArrayList<NumberModel> list) {
         this.list = list;
