@@ -68,7 +68,7 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(this, phone_num, Toast.LENGTH_LONG).show();
                 list.add(new NumberModel(phone_num));
                 numberAdapter.notifyDataSetChanged();
-//                sendSMS(phone_num,"Busy");
+                sendSMS(phone_num,"Busy");
             } else {
                 Toast.makeText(this, "Not identified", Toast.LENGTH_SHORT).show();
             }
