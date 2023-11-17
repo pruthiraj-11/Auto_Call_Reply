@@ -15,7 +15,6 @@ import android.widget.Toast;
 
 import androidx.core.app.ActivityCompat;
 
-import com.app.autocallreply.Activities.MainActivity;
 import com.app.autocallreply.Models.NumberModel;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
