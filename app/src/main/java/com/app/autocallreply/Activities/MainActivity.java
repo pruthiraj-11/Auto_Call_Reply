@@ -2,16 +2,20 @@ package com.app.autocallreply.Activities;
 
 import android.Manifest;
 import android.content.ComponentName;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.telephony.SmsManager;
 import android.view.MotionEvent;
+import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -32,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
     ArrayList<NumberModel> list;
     NumberAdapter numberAdapter;
     String phone_num;
+    EditText getPhoneNum;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -104,9 +109,27 @@ public class MainActivity extends AppCompatActivity {
                     return true;
                 }
                 if (event.getRawX()>=textLocation[0]+binding.addNumber.getWidth()-binding.addNumber.getTotalPaddingRight()){
-                    list.add(new NumberModel(phone_num));
-                    numberAdapter.notifyDataSetChanged();
-                    Toast.makeText(MainActivity.this, "Added", Toast.LENGTH_SHORT).show();
+                    AlertDialog.Builder alertPhone = new AlertDialog.Builder(this);
+                    alertPhone.setCancelable(false);
+                    final EditText phoneinput = new EditText(MainActivity.this);
+                    alertPhone.setTitle("Enter a phone number");
+                    alertPhone.setView(phoneinput);
+                    LinearLayout layoutName = new LinearLayout(this);
+                    layoutName.setOrientation(LinearLayout.VERTICAL);
+                    layoutName.addView(phoneinput);
+                    alertPhone.setView(layoutName);
+                    alertPhone.setPositiveButton("Add", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int whichButton) {
+                            getPhoneNum = phoneinput;
+                            collectInput();
+                        }
+                    });
+                    alertPhone.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int whichButton) {
+                                    dialog.cancel();
+                                }
+                    });
+                    alertPhone.show();
                     return true;
                 }
             }
@@ -119,6 +142,18 @@ public class MainActivity extends AppCompatActivity {
                 finish();
             }
         });
+    }
+
+    public void collectInput(){
+        String getInput = getPhoneNum.getText().toString();
+        if (getInput ==null || getInput.trim().equals("")){
+            Toast.makeText(getBaseContext(), "Field can't be empty.", Toast.LENGTH_LONG).show();
+        }
+        else {
+            list.add(new NumberModel("+91"+getInput));
+            numberAdapter.notifyDataSetChanged();
+            Toast.makeText(MainActivity.this, "Phone number added.", Toast.LENGTH_SHORT).show();
+        }
     }
 
     public void sendSMS(String phoneNo, String msg) {
