@@ -170,7 +170,7 @@ public class MainActivity extends AppCompatActivity {
         String json = gson.toJson(list);
         editor.putString("numberList", json);
         editor.apply();
-        Toast.makeText(this, "Saved Array List", Toast.LENGTH_SHORT).show();
+//        Toast.makeText(this, "Saved Array List", Toast.LENGTH_SHORT).show();
     }
 
     private void loadData() {
