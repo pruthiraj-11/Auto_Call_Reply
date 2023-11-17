@@ -36,7 +36,10 @@ public class NumberAdapter extends RecyclerView.Adapter<NumberAdapter.viewHolder
 
     @Override
     public int getItemCount() {
-        return list.size();
+        if (list!=null){
+            return list.size();
+        }
+        return 0;
     }
 
     public static class viewHolder extends RecyclerView.ViewHolder{
