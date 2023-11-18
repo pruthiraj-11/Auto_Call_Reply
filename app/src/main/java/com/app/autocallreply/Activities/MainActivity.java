@@ -20,17 +20,21 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.app.autocallreply.Adapter.NumberAdapter;
 import com.app.autocallreply.Broadcast_Receiver.PhonecallReceiver;
 import com.app.autocallreply.Models.NumberModel;
 import com.app.autocallreply.databinding.ActivityMainBinding;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -102,6 +106,29 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(MainActivity.this, "Service disabled.", Toast.LENGTH_SHORT).show();
             }
         });
+
+        new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT) {
+            @Override
+            public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+                return false;
+            }
+            @Override
+            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+                NumberModel deletedNumber = list.get(viewHolder.getAdapterPosition());
+                int position = viewHolder.getAdapterPosition();
+                list.remove(viewHolder.getAdapterPosition());
+                numberAdapter.notifyItemRemoved(viewHolder.getAdapterPosition());
+                Toast.makeText(MainActivity.this,"Number deleted",Toast.LENGTH_SHORT).show();
+                saveData();
+//                Snackbar.make(Objects.requireNonNull(MainActivity.this.getCurrentFocus()), deletedNumber.getNumber(), Snackbar.LENGTH_LONG).setAction("Undo", new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//                        list.add(position, deletedNumber);
+//                        numberAdapter.notifyItemInserted(position);
+//                    }
+//                }).show();
+            }
+        }).attachToRecyclerView(binding.recyclerView);
 
         binding.addNumber.setOnTouchListener((v, event) -> {
             if (event.getAction() == MotionEvent.ACTION_UP) {

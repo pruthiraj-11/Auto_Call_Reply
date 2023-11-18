@@ -61,7 +61,7 @@ public class PhonecallReceiver extends BroadcastReceiver {
 //                context.startActivity(intent1);
 //            }
         } else if (Objects.equals(intent.getStringExtra(TelephonyManager.EXTRA_STATE), TelephonyManager.EXTRA_STATE_IDLE)) {
-                //perform main work
+
         }
     }
 
